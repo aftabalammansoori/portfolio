@@ -1,0 +1,15 @@
+export const techStack = [
+  { name: "JavaScript", color: "#f7df1e" },
+  { name: "Java", color: "#ed8b00" },
+  { name: "React", color: "#61dafb" },
+  { name: "Node.js", color: "#339933" },
+  { name: "Express", color: "#e5e5e5" },
+  { name: "MongoDB", color: "#47a248" },
+  { name: "MySQL", color: "#4479a1" },
+  { name: "Spring Boot", color: "#6db33f" },
+  { name: "Tailwind CSS", color: "#38bdf8" },
+  { name: "Git", color: "#f05032" },
+  { name: "HTML5", color: "#e34f26" },
+  { name: "CSS3", color: "#1572b6" },
+  { name: "C++", color: "#00599c" },
+];

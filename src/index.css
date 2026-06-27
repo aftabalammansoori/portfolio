@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #f59e0b;
+  --color-accent-dim: #d97706;
+  --color-accent-soft: rgba(245, 158, 11, 0.15);
+  --color-live: #ef4444;
+  --color-live-dim: #dc2626;
+  --color-featured: #8b5cf6;
+  --color-featured-dim: #7c3aed;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+:root {
+  --color-bg: #0a0a09;
+  --color-surface: #14130f;
+  --color-surface-elevated: #1a1814;
+  --color-border: #2a2823;
+  --color-border-strong: #3a3731;
+  --color-muted: #a8a29e;
+  --color-text: #e7e5e4;
+  --color-text-strong: #fafaf9;
+  --c-live: #ef4444;
+  --c-live-soft: rgba(239, 68, 68, 0.15);
+  --c-featured: #8b5cf6;
+  --c-featured-soft: rgba(139, 92, 246, 0.15);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+  --shadow-button: 0 4px 16px rgba(245, 158, 11, 0.25);
+  --vignette: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+}
+
+:root.light {
+  --color-bg: #f6f3ee;
+  --color-surface: #fbf9f4;
+  --color-surface-elevated: #ffffff;
+  --color-border: #d6d3cc;
+  --color-border-strong: #b8b4ab;
+  --color-muted: #57534e;
+  --color-text: #1c1917;
+  --color-text-strong: #0c0a09;
+
+  /* Accent colors slightly darker for AA contrast on light bg */
+  --c-live: #dc2626;
+  --c-live-soft: rgba(220, 38, 38, 0.12);
+  --c-featured: #7c3aed;
+  --c-featured-soft: rgba(124, 58, 237, 0.12);
+
+  --shadow-card: 0 1px 2px rgba(28, 25, 23, 0.04), 0 4px 16px rgba(28, 25, 23, 0.08);
+  --shadow-button: 0 4px 16px rgba(217, 119, 6, 0.30);
+  --vignette: radial-gradient(ellipse at center, transparent 50%, rgba(120, 100, 60, 0.08) 100%);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(245, 158, 11, 0.015) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--vignette);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glow { text-shadow: 0 0 30px rgba(245, 158, 11, 0.5); }
+:root.light .glow { text-shadow: 0 0 30px rgba(217, 119, 6, 0.4); }
+
+.glow-live { text-shadow: 0 0 20px var(--c-live-soft); }
+.glow-featured { text-shadow: 0 0 20px var(--c-featured-soft); }
+
+.card-elevated { box-shadow: var(--shadow-card); }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track { animation: marquee 40s linear infinite; }
+.marquee-container:hover .marquee-track { animation-play-state: paused; }
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.cursor-blink::after {
+  content: "_";
+  color: var(--color-accent);
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+.line-numbers { counter-reset: line; }
+.line-numbers > * {
+  counter-increment: line;
+  position: relative;
+  padding-left: 3rem;
+}
+.line-numbers > *::before {
+  content: counter(line);
+  position: absolute;
+  left: 0;
+  width: 2rem;
+  text-align: right;
+  color: var(--color-muted);
+  opacity: 0.6;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  user-select: none;
+}
+
+input:focus, textarea:focus {
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+  border-color: var(--color-accent) !important;
+}
+
+section { position: relative; z-index: 2; }
+
+.btn-accent {
+  box-shadow: var(--shadow-button);
+  transition: all 0.2s ease;
+}
+.btn-accent:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(245, 158, 11, 0.4);
+}
+
+/* === LIGHT MODE: syntax highlighting in About code editor === */
+/* Dark mode uses Tailwind colors directly; light mode needs slightly different shades for contrast */
+:root.light .text-purple-400 { color: #7c3aed; }
+:root.light .text-blue-400 { color: #2563eb; }
+:root.light .text-green-400 { color: #15803d; }
+:root.light .text-yellow-300 { color: #b45309; }
+:root.light .text-red-400 { color: #b91c1c; }
+
+@keyframes portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.portrait-float {
+  animation: portrait-float 5s ease-in-out infinite;
+}
+
+@keyframes portrait-ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.05); opacity: 0.6; }
+}
+
+.portrait-ring {
+  animation: portrait-ring-pulse 4s ease-in-out infinite;
+}
+
+@keyframes portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.portrait-float {
+  animation: portrait-float 5s ease-in-out infinite;
+}
+
+@keyframes portrait-ring-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.05); opacity: 0.6; }
+}
+
+.portrait-ring {
+  animation: portrait-ring-pulse 4s ease-in-out infinite;
+}
